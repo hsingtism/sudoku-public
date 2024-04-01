@@ -1,0 +1,126 @@
+@media print {
+    .pagebreak { page-break-before: always; }
+}
+
+@page {
+    margin-top: 0.75in;
+    margin-bottom: 0.75in;
+    margin-left: 0.75in;
+    margin-right: 0.75in;    
+    size: 8.5in 11in;
+}
+
+.codePre {
+    font-family: 'Fira Code';
+    white-space: pre-wrap;
+    font-size: 10pt;
+}
+
+body {
+    font-family: Helvetica;
+    font-size: 12pt;
+}
+
+#cover {
+    /* margin-top: 3.5in; */
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center;  */
+    transform: rotate(-90deg) translate(-3in, -3in);
+}
+
+#cover > * {
+    flex: 1;
+    margin: 0 0;
+    text-align: right;
+}
+
+h1 {
+    font-size: 48pt;
+    font-weight: lighter;
+}
+
+h2 {
+    font-size: 24pt;
+    font-weight: lighter;
+}
+
+p {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.board {
+    width: 4.125in;
+    height: 4.125in;
+    display: flex;
+    flex-direction: column;
+}
+
+.solutionHolder {
+    display: flex;
+    flex-direction: row;
+    width: calc(4.125in + 0.125in + 0.125in);
+    flex-wrap: wrap;
+}
+
+.solutionHolder > p {
+    flex: 2;
+    width: 4.125in;
+}
+
+.solutionBoard {
+    width: 2.0625in;
+    height: 2.0625in;
+    margin-right: 0.125in;
+    display: flex;
+    flex-direction: column;
+}
+
+/* this is literally a css war crime but it's 2 am and it works so i'm not fixing it */
+.solutionBoard > * > * > * > * {
+    font-size: 15px !important;
+}
+.solutionBoard > * > * {
+    border: none !important;
+}
+
+.boardrow {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
+.boardblock {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    flex: 1;
+}
+
+.blockrow {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+.blockentry {
+    display: flex;
+    border: 1px solid black;
+    flex: 1;
+    font-size: 30px;
+    justify-content: center;
+    align-items: center;
+}
+
+.blankPage > p {
+    text-align: center;
+}
+
+#lastPage {
+    margin-top: calc(9.5in - 72px);
+}
+
+#lastPage > p {
+    text-align: right;
+}
