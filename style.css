@@ -1,40 +1,8 @@
-@media print {
-    .pagebreak { page-break-before: always; }
-}
-
-@page {
-    margin-top: 0.75in;
-    margin-bottom: 0.75in;
-    margin-left: 0.75in;
-    margin-right: 0.75in;    
-    size: 8.5in 11in;
-}
-
-.codePre {
-    font-family: 'Fira Code';
-    white-space: pre-wrap;
-    font-size: 10pt;
-}
-
 body {
     font-family: Helvetica;
     font-size: 12pt;
 }
 
-#cover {
-    /* margin-top: 3.5in; */
-    display: flex;
-    flex-direction: column;
-    /* justify-content: center; */
-    /* align-items: center;  */
-    transform: rotate(-90deg) translate(-3in, -3in);
-}
-
-#cover > * {
-    flex: 1;
-    margin: 0 0;
-    text-align: right;
-}
 
 h1 {
     font-size: 48pt;
@@ -113,14 +81,3 @@ p {
     align-items: center;
 }
 
-.blankPage > p {
-    text-align: center;
-}
-
-#lastPage {
-    margin-top: calc(9.5in - 72px);
-}
-
-#lastPage > p {
-    text-align: right;
-}

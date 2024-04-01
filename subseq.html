@@ -11,64 +11,8 @@
     <script defer src="render-subseq.js"></script>
 </head>
 <body>
-    <div id="cover">
-
-    </div>
-
-    <div class="pagebreak"></div>
-    <div class="blankPage">
-        <p>This page is intentionally left blank</p>
-    </div>
-
-    <div class="pagebreak"></div>
-
-
-    <div class="pagebreak"></div>
-
-    <!-- boards written here -->
     <div id="boards"></div>
-
-    <div class="blankPage">
-        <p>This page is intentionally left blank</p>
-    </div>
-    <div class="pagebreak"></div>
-    
-    <!-- solutions written here -->
     <div id="solutions"></div>
-
-    <div class="blankPage">
-        <p>This page is intentionally left blank</p>
-    </div>
-    <div class="pagebreak"></div>
-
-    
-
-    <div class="pagebreak"></div>
-
-    <div class="pagebreak"></div>
-    <!-- back cover -->
-
 </body>
-<script defer>
-    // kinda gross but it works
-    const tableLength = document.getElementById('stateTable').lastChild.children.length
-    for(let i = 0; i < tableLength; i++) {
-        document.getElementById('stateTable').lastChild.children[i].children[0].innerText = romanize(document.getElementById('stateTable').lastChild.children[i].children[0].innerText)
-    }
 
-    // https://stackoverflow.com/a/9083076
-    function romanize(num) {
-    if (isNaN(num)) return '';
-    var digits = String(+num).split(""),
-        key = ["","C","CC","CCC","CD","D","DC","DCC","DCCC","CM",
-               "","X","XX","XXX","XL","L","LX","LXX","LXXX","XC",
-               "","I","II","III","IV","V","VI","VII","VIII","IX"],
-        roman = "",
-        i = 3;
-    while (i--)
-        roman = (key[+digits.pop() + (i * 10)] || "") + roman;
-    return Array(+digits.join("") + 1).join("M") + roman;
-}
-
-</script>
 </html>
