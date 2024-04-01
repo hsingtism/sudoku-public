@@ -1,7 +1,7 @@
 #define PUZZLE_COUNT 300
 #define STARTING_STATE_0 0x4fe68a88145cbd9a
 #define STARTING_STATE_1 0xf3669a5815485809
-#define OUTPUT_NAME "vol2.js"
+#define OUTPUT_NAME "data.js"
 
 #include <stdio.h>
 #include <stdint.h>
