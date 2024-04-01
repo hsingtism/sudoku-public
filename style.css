@@ -26,34 +26,6 @@ p {
     flex-direction: column;
 }
 
-.solutionHolder {
-    display: flex;
-    flex-direction: row;
-    width: calc(4.125in + 0.125in + 0.125in);
-    flex-wrap: wrap;
-}
-
-.solutionHolder > p {
-    flex: 2;
-    width: 4.125in;
-}
-
-.solutionBoard {
-    width: 2.0625in;
-    height: 2.0625in;
-    margin-right: 0.125in;
-    display: flex;
-    flex-direction: column;
-}
-
-/* this is literally a css war crime but it's 2 am and it works so i'm not fixing it */
-.solutionBoard > * > * > * > * {
-    font-size: 15px !important;
-}
-.solutionBoard > * > * {
-    border: none !important;
-}
-
 .boardrow {
     display: flex;
     flex-direction: row;
