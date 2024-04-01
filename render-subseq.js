@@ -21,26 +21,16 @@ function render() {
     const removes = Array(puzzleCount).fill().map((v, i) => dataArray[i * 4 + 2])
     const checkercalls = Array(puzzleCount).fill().map((v, i) => dataArray[i * 4 + 3])
 
-    let boardFeed = ''
-    let solutionFeed = ''
+    const boardFeedPuzzle = (v, i) => `<p>${i + 1}. ${removes[i]} removed. ${checkercalls[i]} checker calls.</p>` 
+        + Array(81).fill().flatMap((v, j) => [boardTemplate[j], boards[i][fillOrder[j]].replace('0', ' ')]).join("") 
+        + boardTemplate[81]
 
+    const solutionFeedPuzzle = (v, i) => `<p>${i + 1}. solution</p>` 
+        + Array(81).fill().flatMap((v, j) => [boardTemplate[j], solutions[i][fillOrder[j]]]).join("") 
+        + boardTemplate[81]
 
-    for(let i = 0; i < puzzleCount; i++) {
-
-        boardFeed += `<p>${i + 1}. ${removes[i]} removed. ${checkercalls[i]} checker calls.</p>` +
-            Array(81).fill()
-            .flatMap((v, j) => [boardTemplate[j], boards[i][fillOrder[j]].replace('0', ' ')])
-            .join("") + boardTemplate[81]
-        
-        solutionFeed += `<p>${i + 1}. solution</p>` +
-            Array(81).fill()
-            .flatMap((v, j) => [boardTemplate[j], solutions[i][fillOrder[j]]])
-            .join("") + boardTemplate[81]
-
-    }
-
-    document.getElementById('boards').innerHTML = boardFeed
-    document.getElementById('solutions').innerHTML = solutionFeed
+    document.getElementById('boards').innerHTML = Array(puzzleCount).fill().map(boardFeedPuzzle).join('')
+    document.getElementById('solutions').innerHTML = Array(puzzleCount).fill().map(solutionFeedPuzzle).join('')
     
 }
 
