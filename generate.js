@@ -1,1 +1,5 @@
-console.log('test')
+// const data = 0
+
+function generate(puzzleCount) {
+
+}
