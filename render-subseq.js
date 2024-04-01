@@ -26,25 +26,16 @@ function render() {
 
 
     for(let i = 0; i < puzzleCount; i++) {
-        const puzzleID = i + 1
-    
-        boardFeed += `<p>${puzzleID}. ${removes[i]} removed. ${checkercalls[i]} checker calls.</p>`
-        solutionFeed += `<p>${puzzleID}. solution</p>`
 
-        boardFeed += (
-            Array(81)
-            .fill()
-            .flatMap((v, j) => [boardTemplate[j], boards[i][fillOrder[j]] != 0 ? boards[i][fillOrder[j]] : ' '])
-        ).join("")
+        boardFeed += `<p>${i + 1}. ${removes[i]} removed. ${checkercalls[i]} checker calls.</p>` +
+            Array(81).fill()
+            .flatMap((v, j) => [boardTemplate[j], boards[i][fillOrder[j]].replace('0', ' ')])
+            .join("") + boardTemplate[81]
         
-        solutionFeed += (
-            Array(81)
-            .fill()
+        solutionFeed += `<p>${i + 1}. solution</p>` +
+            Array(81).fill()
             .flatMap((v, j) => [boardTemplate[j], solutions[i][fillOrder[j]]])
-        ).join("")
-    
-        boardFeed += boardTemplate[81]
-        solutionFeed += boardTemplate[81]
+            .join("") + boardTemplate[81]
 
     }
 
