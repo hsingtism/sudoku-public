@@ -1,10 +1,7 @@
-#define PUZZLE_COUNT 300
-#define STARTING_STATE_0 0x4fe68a88145cbd9a
-#define STARTING_STATE_1 0xf3669a5815485809
-#define OUTPUT_NAME "data.js"
-
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h> 
+#include <string.h>
 
 #define BOARD_SIDE_LENGTH 9
 #define BOARD_LENGTH 81
@@ -43,8 +40,8 @@ int countCheckerCalls(board_t* board) {
 
 // PRNG based on V8 https://v8.dev/blog/math-random.
 // prng state at global scope so I can access it fom main
-uint64_t state0 = STARTING_STATE_0;
-uint64_t state1 = STARTING_STATE_1;
+uint64_t state0;
+uint64_t state1;
 uint64_t xorshift128plus() {
     uint64_t s1 = state0;
     uint64_t s0 = state1;
@@ -193,46 +190,47 @@ void generateBoard(board_t* minimumBoard, board_t* filledBoard,
     }
 }
 
-int main() {
-    int totalWritten = 0;
+char* mainchild(int puzzleCount, uint64_t state0I, uint64_t state1I) {
+    state0 = state0I;
+    state1 = state1I;
 
-    FILE *file = fopen(OUTPUT_NAME, "w"); // output file to be read in js
-    if(file == NULL) return 1;
-
-    totalWritten += fprintf(file, "const data = \'");
+    char* out = (char*) calloc(181 * (puzzleCount + 1), sizeof(char)); // to be freed by main
 
     board_t board[BOARD_LENGTH];
     board_t solvedBoard[BOARD_LENGTH];
     int removes;
 
-    for (int i = 0; i < PUZZLE_COUNT; i++) {
+    for (int i = 0; i < puzzleCount; i++) {
         
         removes = _01() * 46 + 18; // set this
         generateBoard(board, solvedBoard, removes);
         
         for (int i = 0; i < BOARD_LENGTH; i++) {
-            totalWritten += fprintf(file, "%c", board[i] + 0x30);
+            sprintf(out + strlen(out), "%c", (char)board[i] + 0x30);
         }
 
-        totalWritten += fprintf(file, "~");
+        sprintf(out + strlen(out), "~");
 
         for (int i = 0; i < BOARD_LENGTH; i++) {
-            totalWritten += fprintf(file, "%c", solvedBoard[i] + 0x30);
+            sprintf(out + strlen(out), "%c", (char)solvedBoard[i] + 0x30);
         }
 
-        totalWritten += fprintf(file, "~");
+        sprintf(out + strlen(out), "~");
 
-        totalWritten += fprintf(file, "%d~", removes);
-        totalWritten += fprintf(file, "%d~", countCheckerCalls(board));
+        sprintf(out + strlen(out), "%09d~", removes);
+        sprintf(out + strlen(out), "%09d~", countCheckerCalls(board));
 
     }
     
-    totalWritten += fprintf(file, "%llx~", state0);
-    totalWritten += fprintf(file, "%llx~", state1);
+    sprintf(out + strlen(out), "0~");
+    sprintf(out + strlen(out), "0~");
 
-    (void)fprintf(file, "\'\n");
-    (void)fclose(file);
-    (void)printf("printed %d characters", totalWritten);
+    return out;
+}
 
+int main() {
+    char* output = mainchild(10, 0x1, 0x2);
+    puts(output);
+    free(output);
     return 0;
 }
