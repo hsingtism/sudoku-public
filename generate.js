@@ -1,41 +1,66 @@
-// const data = 0
+// #define PUZZLE_COUNT 300
+// #define STARTING_STATE_0 0x4fe68a88145cbd9a
+// #define STARTING_STATE_1 0xf3669a5815485809
+// #define OUTPUT_NAME "data.js"
 
-// transpile begin
+// #include <stdio.h>
+// #include <stdint.h>
 
-const BOARD_SIDE_LENGTH = 9
-const BOARD_LENGTH = 81
-const BOARD_SUBLENGTH = 3
+// #define BOARD_SIDE_LENGTH 9
+// #define BOARD_LENGTH 81
+// #define BOARD_SUBLENGTH 3
 
-const blockAnchor = [0, 3, 6, 27, 30, 33, 54, 57, 60]
-const blockOffset = [0, 1, 2, 9, 10, 11, 18, 19, 20]
+// typedef uint8_t board_t;
 
-function zeroBoard(board, length) {
-    board = Array(length).fill(0)
-}
+// const int blockAnchor[] = {0, 3, 6, 27, 30, 33, 54, 57, 60};
+// const int blockOffset[] = {0, 1, 2, 9, 10, 11, 18, 19, 20};
 
-function duplicateBoard(source, destination, length) {
-    destination = [...source]
-}
+// void zeroBoard(board_t* board, int length) {
+//     for (int i = 0; i < length; i++) { board[i] = 0x00; }
+// }
 
-let checkerCountRunning = 0
-function manageCheckerCallCount(add, reset) {
-    checkerCountRunning -= reset * count;
-    checkerCountRunning += add;
-    return count 
-}
+// void duplicateBoard(board_t* source, board_t* destination, int length) {
+//     for (int i = 0; i < length; i++) { destination[i] = source[i]; }
+// }
 
+// int manageCheckerCallCount(int add, int reset) {
+//     static int count = 0;
+//     count -= reset * count;
+//     count += add;
+//     return count; 
+// }
 
-function countCheckerCalls(board) {
-    const tBoard = Array(BOARD_LENGTH)
-    duplicateBoard(board, tBoard, BOARD_LENGTH);
+// void solveSudoku(board_t* board);
 
-    manageCheckerCallCount(0, 1);
-    solveSudoku(tBoard);
-    return manageCheckerCallCount(0, 0);
-}
+// int countCheckerCalls(board_t* board) {
+//     board_t tBoard[BOARD_LENGTH];
+//     duplicateBoard(board, tBoard, BOARD_LENGTH);
 
-const randLarge = () => Math.random() * MAX_SAFE_INTEGER
-const rand32 = randLarge // legacy naming
+//     manageCheckerCallCount(0, 1);
+//     solveSudoku(tBoard);
+//     return manageCheckerCallCount(0, 0);
+// }
+
+// // PRNG based on V8 https://v8.dev/blog/math-random.
+// // prng state at global scope so I can access it fom main
+// uint64_t state0 = STARTING_STATE_0;
+// uint64_t state1 = STARTING_STATE_1;
+// uint64_t xorshift128plus() {
+//     uint64_t s1 = state0;
+//     uint64_t s0 = state1;
+//     state0 = s0;
+//     s1 ^= s1 << 23;
+//     s1 ^= s1 >> 17;
+//     s1 ^= s0;
+//     s1 ^= s0 >> 26;
+//     state1 = s1;
+//     return state0 + state1;
+// }
+
+// // anding them just in case
+// uint64_t rand64() { return xorshift128plus(); }
+// uint32_t rand32() { return (uint32_t)(xorshift128plus() & 0x0000FFFF); }
+// uint16_t rand16() { return (uint16_t)(xorshift128plus() & 0x000000FF); }
 
 // void swap(board_t *a, board_t *b) {
 //     board_t t = *a;
@@ -52,22 +77,22 @@ const rand32 = randLarge // legacy naming
     
 // }
 
-// critical function, is bottleneck
-function canPlace(board, position, number) {
-    manageCheckerCallCount(1, 0)
+// // critical function, is bottleneck
+// int canPlace(board_t* board, int position, board_t number) {
+//     (void)manageCheckerCallCount(1, 0);
 
-    row = Math.floor(position / BOARD_SIDE_LENGTH);
-    column = position % BOARD_SIDE_LENGTH;
-    block = Math.floow(column / BOARD_SUBLENGTH) + row - row % BOARD_SUBLENGTH;
+//     int row = position / BOARD_SIDE_LENGTH;
+//     int column = position % BOARD_SIDE_LENGTH;
+//     int block = column / BOARD_SUBLENGTH + row - row % BOARD_SUBLENGTH;
 
-    for (i = 0; i < BOARD_SIDE_LENGTH; i++) {
-        if(board[row * BOARD_SIDE_LENGTH + i] == number 
-        || board[column + BOARD_SIDE_LENGTH * i] == number 
-        || board[blockAnchor[block] + blockOffset[i]] == number) return 0;
-    }
+//     for (int i = 0; i < BOARD_SIDE_LENGTH; i++) {
+//         if(board[row * BOARD_SIDE_LENGTH + i] == number 
+//         || board[column + BOARD_SIDE_LENGTH * i] == number 
+//         || board[blockAnchor[block] + blockOffset[i]] == number) return 0;
+//     }
 
-    return 1;
-}
+//     return 1;
+// }
 
 // int recursor(board_t* board, int position) {
 //     if(position == BOARD_LENGTH) return 1;
@@ -84,9 +109,9 @@ function canPlace(board, position, number) {
 //     return 0;
 // }
 
-function solveSudoku(board) {
-    recursor(board, 0);
-}
+// void solveSudoku(board_t* board) {
+//     recursor(board, 0);
+// }
 
 // int recursorR(board_t* board, int position) {
 //     if(position == BOARD_LENGTH) return 1;
@@ -109,9 +134,9 @@ function solveSudoku(board) {
 //     return 0;
 // }
 
-function randomSolveSudoku(board) {
-    recursorR(board, 0);
-}
+// void randomSolveSudoku(board_t* board) {
+//     recursorR(board, 0);
+// }
 
 // int recursorU(board_t* board, int position, int count) {
 //     if(position == BOARD_LENGTH) return count + 1;
@@ -128,63 +153,86 @@ function randomSolveSudoku(board) {
 //     return count;
 // }
 
-function uniqueSolution(board) {
-    const workingBoard = Array(BOARD_LENGTH);
-    duplicateBoard(board, workingBoard, BOARD_LENGTH);
-    return recursorU(workingBoard, 0, 0);
-}
+// int uniqueSolution(board_t* board) {
+//     board_t workingBoard[BOARD_LENGTH];
+//     duplicateBoard(board, workingBoard, BOARD_LENGTH);
+//     return recursorU(workingBoard, 0, 0);
+// }
 
-function generateFilledBoard(board) {
-    zeroBoard(board, BOARD_LENGTH)
-    randomSolveSudoku(board)
-}
+// void generateFilledBoard(board_t* board) {
+//     zeroBoard(board, BOARD_LENGTH);
+//     randomSolveSudoku(board);
+// }
 
-const _01 = Math.random // legacy naming
+// // this is technically undefined behavior 
+// // but everyone uses IEEE 754
+// double _01() {
+//     uint64_t u64 = 0x3FF0000000000000 | (rand64() >> 12);
+//     return *(double *)&u64 - 1.0;
+// }
 
-function generateBoard(minimumBoard, filledBoard, cellsToRemove) {
-    zeroBoard(filledBoard, BOARD_LENGTH);
-    generateFilledBoard(filledBoard);
+// void generateBoard(board_t* minimumBoard, board_t* filledBoard, 
+//                    int cellsToRemove) {
+//     zeroBoard(filledBoard, BOARD_LENGTH);
+//     generateFilledBoard(filledBoard);
 
-    duplicateBoard(filledBoard, minimumBoard, BOARD_LENGTH);
-    const removeOrder = Array(BOARD_LENGTH);
-    randomNumList(removeOrder, BOARD_LENGTH);
-    let removedCells = 0;
+//     duplicateBoard(filledBoard, minimumBoard, BOARD_LENGTH);
+//     board_t removeOrder[BOARD_LENGTH];
+//     randomNumList(removeOrder, BOARD_LENGTH);
+//     int removedCells = 0;
 
-    for (let i = 0; i < BOARD_LENGTH; i++) {
-        if(removedCells >= cellsToRemove) return;
-        temp = minimumBoard[removeOrder[i]];
-        minimumBoard[removeOrder[i]] = 0;
-        if(uniqueSolution(minimumBoard) == 1) {
-            removedCells++;
-            continue;
-        }
-        minimumBoard[removeOrder[i]] = temp;
-    }
-}
+//     for (int i = 0; i < BOARD_LENGTH; i++) {
+//         if(removedCells >= cellsToRemove) return;
+//         board_t temp = minimumBoard[removeOrder[i]];
+//         minimumBoard[removeOrder[i]] = 0;
+//         if(uniqueSolution(minimumBoard) == 1) {
+//             removedCells++;
+//             continue;
+//         }
+//         minimumBoard[removeOrder[i]] = temp;
+//     }
+// }
 
-function main(puzzleCount) {
-    feed = ''
+// int main() {
+//     int totalWritten = 0;
 
-    board = Array(BOARD_LENGTH)
-    solvedBoard = Array(BOARD_LENGTH)
+//     FILE *file = fopen(OUTPUT_NAME, "w"); // output file to be read in js
+//     if(file == NULL) return 1;
 
-    for (let i = 0; i < puzzleCount; i++) {
+//     totalWritten += fprintf(file, "const data = \'");
 
-        let removes = _01() * 46 + 18; // set this
-        generateBoard(board, solvedBoard, removes)
+//     board_t board[BOARD_LENGTH];
+//     board_t solvedBoard[BOARD_LENGTH];
+//     int removes;
+
+//     for (int i = 0; i < PUZZLE_COUNT; i++) {
         
-        feed += board.join() + '~'
-        feed += solvedBoard.join() + '~'
-        feed += removes + '~'
-        feed += countCheckerCalls(board) + '~'
+//         removes = _01() * 46 + 18; // set this
+//         generateBoard(board, solvedBoard, removes);
+        
+//         for (int i = 0; i < BOARD_LENGTH; i++) {
+//             totalWritten += fprintf(file, "%c", board[i] + 0x30);
+//         }
 
-    }
+//         totalWritten += fprintf(file, "~");
 
-    feed += "0~0~"
-    return 0;
-}
+//         for (int i = 0; i < BOARD_LENGTH; i++) {
+//             totalWritten += fprintf(file, "%c", solvedBoard[i] + 0x30);
+//         }
 
+//         totalWritten += fprintf(file, "~");
 
-function generate(puzzleCount) {
+//         totalWritten += fprintf(file, "%d~", removes);
+//         totalWritten += fprintf(file, "%d~", countCheckerCalls(board));
 
-}
+//     }
+    
+//     totalWritten += fprintf(file, "%llx~", state0);
+//     totalWritten += fprintf(file, "%llx~", state1);
+
+//     (void)fprintf(file, "\'\n");
+//     (void)fclose(file);
+//     (void)printf("printed %d characters", totalWritten);
+
+//     return 0;
+// }
