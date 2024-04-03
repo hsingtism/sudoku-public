@@ -192,12 +192,12 @@ void generateBoard(board_t* minimumBoard, board_t* filledBoard,
     }
 }
 
-char* mainchild(int puzzleCount, uint64_t state0I, uint64_t state1I, int deltaRemoves, int minRemoves) {
+char* mainchild(int puzzleCount, int deltaRemoves, int minRemoves, uint64_t state0I, uint64_t state1I) {
     state0 = state0I;
     state1 = state1I;
 
     char* out = (char*) calloc(181 * (puzzleCount + 1), sizeof(char)); // to be freed by main
-
+    
     board_t board[BOARD_LENGTH];
     board_t solvedBoard[BOARD_LENGTH];
     int removes;

@@ -1,11 +1,16 @@
 Module.onRuntimeInitialized = () => {
+    console.log('wasm ready')
+}
+
+// generateBoards(1, 46, 18)
+function generateBoards(puzzleCount, deltaRemoves, minRemoves) {
     data = Module.ccall(
         'mainchild', 
         'string', 
         ['number', 'number', 'number', 'number', 'number'], 
-        [2, 105, 120, 46.0, 18.0])
+        [puzzleCount, deltaRemoves, minRemoves, Number.MAX_SAFE_INTEGER * Math.random(), Number.MAX_SAFE_INTEGER * Math.random() + 1])
     render(data)
-    console.log('done', performance.now())
+    console.log('done')
 }
 
 function render(data) {
