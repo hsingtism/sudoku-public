@@ -28,9 +28,10 @@ Module.onRuntimeInitialized = () => {
 }
 
 async function generateBoards(puzzleCount, deltaRemoves, minRemoves) {
-    document.getElementById('status').innerText = "GENERATING PUZZLES. WAIT PATIENTLY."
+    document.getElementById('status').innerHTML = "GENERATING PUZZLES. WAIT PATIENTLY. Please allow for up to 1 second per puzzle. <span style=\"color: red;\">For large tasks, <b>if a \"Page Unresponsive\" dialog pops up. DO NOT EXIT OR KILL THE PAGE.</b> Ignore the dialog or click \"Wait\". The dialog is normal for large tasks. <b>DO NOT TRY TO REFRESH THE PAGE WHILE THIS MESSAGE IS DISPLAYED.</b></span>"
     document.getElementById('boards').innerHTML = ""
     document.getElementById('solutions').innerHTML = ""
+    document.getElementById('fire').disabled = true
 
     await sleep(0)
 
@@ -43,6 +44,7 @@ async function generateBoards(puzzleCount, deltaRemoves, minRemoves) {
         [puzzleCount, deltaRemoves, minRemoves, Number.MAX_SAFE_INTEGER * Math.random(), Number.MAX_SAFE_INTEGER * Math.random() + 1])
     render(data)
     document.getElementById('status').innerText = `COMPLETE. TOOK ${performance.now() - t1} MILLISECONDS.`
+    document.getElementById('fire').disabled = false
 }
 
 function render(data) {
