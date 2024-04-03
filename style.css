@@ -13,6 +13,7 @@ p {
     height: 4.125in;
     display: flex;
     flex-direction: column;
+    page-break-after: always;
 }
 
 .boardrow {
