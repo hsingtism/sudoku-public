@@ -11,9 +11,20 @@
 </head>
 
 <body>
+    <div class="footer">
+        Sudoku Generator on hsing.org/m-sudoku/demo. Written by Hsing.
+    </div>
     <div id="interaction">
         <h1>Sudoku Generator</h1>
-        <p>placeholder. min and max removes are generated on a uniform distribution. TODO check max >= min. </p>
+        <p><a href="https://hsing.org/m-sudoku">Main article here</a>. This page only explains how to use.</p>
+        <p><b>You must be on a modern brower for this page to function.</b> Anything 2018 should be fine.</p>
+        <p>For each puzzle, the program generates a random integer between <i>Minimum removes</i> and <i>Maximum Removes</i> and attempts to remove that amount of cells until there is no unique solution given the randomly generated puzzle.</p>
+        <p>The program is not optimized for speed but for maxium information entropy (randomness). Each puzzle takes an average 0.1 seconds to generate and up to 1 second for difficult puzzles. Most puzzles takes less than 0.01 seconds (median).</p>
+        <p>The randomness comes from an internal PRNG on the WASM side, but is seeded with <i>Math.random</i></p>
+        <p>The generated puzzles are designed to be printed. One puzzle or solution per page. "removed" means attempted removes. "checker calls" means the number of checks needed for the computer program to solve the puzzle, it is a rough gauge of difficulty.</p>
+        <p>Written my <a href="https://hsing.org">Hsing</a>. Enjoy.</p>
+
+        <hr>
 
         <p>Number of puzzles</p>
         <input type="number" id="pCount" value="1">
@@ -27,10 +38,15 @@
         <output>64</output>
 
         <br><button id="fire">Generate</button>
-        <br><button id="removeUI">Remove UI</button>
+        <br><button id="removeUI">Remove UI (CLICK ON THIS FOR PRINTING)</button>
         <br><button id="removeAnswer">Hide answer key</button>
+        <br><button id="removeBoards">Clear results</button>
+
+        <hr>
 
         <p id="status">INITIAL CONDITION. IF THIS MESSAGE DISPLAYS FOR MORE THAN A FEW SECONDS, YOUR BROWSER MAY NOT SUPPORT WEBASSEMBLY.</p>
+
+        <hr>
     </div>
     <div id="boards"></div>
     <div id="solutions"></div>

@@ -1,3 +1,15 @@
+@media screen {
+    .footer {
+        display: none;
+    }
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    background: #ffffff80;
+}
+
 body {
     font-family: Helvetica, sans-serif;
     font-size: 12pt;

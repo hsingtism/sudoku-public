@@ -14,6 +14,11 @@ document.getElementById('removeAnswer').addEventListener('click', () => {
     document.getElementById('solutions').innerHTML = ''
 })
 
+document.getElementById('removeBoards').addEventListener('click', () => {
+    document.getElementById('boards').innerHTML = ''
+    document.getElementById('solutions').innerHTML = ''
+})
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -29,13 +34,15 @@ async function generateBoards(puzzleCount, deltaRemoves, minRemoves) {
 
     await sleep(0)
 
+    const t1 = performance.now()
+
     data = Module.ccall(
         'mainchild', 
         'string', 
         ['number', 'number', 'number', 'number', 'number'], 
         [puzzleCount, deltaRemoves, minRemoves, Number.MAX_SAFE_INTEGER * Math.random(), Number.MAX_SAFE_INTEGER * Math.random() + 1])
     render(data)
-    document.getElementById('status').innerText = "COMPLETE."
+    document.getElementById('status').innerText = `COMPLETE. TOOK ${performance.now() - t1} MILLISECONDS.`
 }
 
 function render(data) {
