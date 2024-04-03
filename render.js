@@ -1,3 +1,19 @@
+document.getElementById('fire').addEventListener('click', () => {
+    generateBoards(
+        document.getElementById('pCount').value,
+        document.getElementById('maxRemoves').value - document.getElementById('minRemoves').value,
+        document.getElementById('minRemoves').value,
+    )
+})
+
+document.getElementById('removeUI').addEventListener('click', () => {
+    document.getElementById('interaction').innerHTML = ''
+})
+
+document.getElementById('removeAnswer').addEventListener('click', () => {
+    document.getElementById('solutions').innerHTML = ''
+})
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
