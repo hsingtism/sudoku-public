@@ -1,3 +1,5 @@
+#include <emscripten.h>
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h> 
@@ -190,7 +192,7 @@ void generateBoard(board_t* minimumBoard, board_t* filledBoard,
     }
 }
 
-char* mainchild(int puzzleCount, uint64_t state0I, uint64_t state1I) {
+char* EMSCRIPTEN_KEEPALIVE mainchild(int puzzleCount, uint64_t state0I, uint64_t state1I) {
     state0 = state0I;
     state1 = state1I;
 
@@ -228,9 +230,9 @@ char* mainchild(int puzzleCount, uint64_t state0I, uint64_t state1I) {
     return out;
 }
 
-int main() {
-    char* output = mainchild(10, 0x1, 0x2);
-    puts(output);
-    free(output);
-    return 0;
-}
+// int main() {
+//     char* output = mainchild(10, 0x1, 0x2);
+//     puts(output);
+//     free(output);
+//     return 0;
+// }
