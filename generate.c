@@ -192,7 +192,7 @@ void generateBoard(board_t* minimumBoard, board_t* filledBoard,
     }
 }
 
-char* EMSCRIPTEN_KEEPALIVE mainchild(int puzzleCount, uint64_t state0I, uint64_t state1I) {
+char* mainchild(int puzzleCount, uint64_t state0I, uint64_t state1I, int deltaRemoves, int minRemoves) {
     state0 = state0I;
     state1 = state1I;
 
@@ -204,7 +204,7 @@ char* EMSCRIPTEN_KEEPALIVE mainchild(int puzzleCount, uint64_t state0I, uint64_t
 
     for (int i = 0; i < puzzleCount; i++) {
         
-        removes = _01() * 46 + 18; // set this
+        removes = _01() * deltaRemoves + minRemoves;
         generateBoard(board, solvedBoard, removes);
         
         for (int i = 0; i < BOARD_LENGTH; i++) {
@@ -229,10 +229,3 @@ char* EMSCRIPTEN_KEEPALIVE mainchild(int puzzleCount, uint64_t state0I, uint64_t
 
     return out;
 }
-
-// int main() {
-//     char* output = mainchild(10, 0x1, 0x2);
-//     puts(output);
-//     free(output);
-//     return 0;
-// }

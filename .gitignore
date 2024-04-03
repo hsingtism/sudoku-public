@@ -1,3 +1,4 @@
 generate.js
 *.wasm
 *.exe
+.vscode
