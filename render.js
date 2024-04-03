@@ -1,16 +1,25 @@
-Module.onRuntimeInitialized = () => {
-    console.log('wasm ready')
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// generateBoards(1, 46, 18)
-function generateBoards(puzzleCount, deltaRemoves, minRemoves) {
+Module.onRuntimeInitialized = () => {
+    document.getElementById('status').innerText = "WEBASSEMBLY READY. WAITING FOR USER INPUT"
+}
+
+async function generateBoards(puzzleCount, deltaRemoves, minRemoves) {
+    document.getElementById('status').innerText = "GENERATING PUZZLES. WAIT PATIENTLY."
+    document.getElementById('boards').innerHTML = ""
+    document.getElementById('solutions').innerHTML = ""
+
+    await sleep(0)
+
     data = Module.ccall(
         'mainchild', 
         'string', 
         ['number', 'number', 'number', 'number', 'number'], 
         [puzzleCount, deltaRemoves, minRemoves, Number.MAX_SAFE_INTEGER * Math.random(), Number.MAX_SAFE_INTEGER * Math.random() + 1])
     render(data)
-    console.log('done')
+    document.getElementById('status').innerText = "COMPLETE."
 }
 
 function render(data) {
